@@ -1,0 +1,405 @@
+{
+	"info": {
+		"_postman_id": "8da8d082-c528-4855-8205-4434caf813ce",
+		"name": "Keycloak Admin REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36568418"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{domain}}/realms/{{realm_name}}/protocol/openid-connect/token",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"realms",
+						"{{realm_name}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get count user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/users/count",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"users",
+						"count"
+					]
+				},
+				"description": "Returns the number of users that match the given criteria."
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/users",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"users"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "Get the client secret",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/clients/{{client-uuid}}}/client-secret",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"clients",
+						"{{client-uuid}}}",
+						"client-secret"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "get roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/clients/{{client-uuid}}/roles",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"clients",
+						"{{client-uuid}}",
+						"roles"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "create role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientRole\": true,\n    \"composite\": false,\n    \"description\": \"demo admin role\",\n    \"id\": \"demo-role-admin\",\n    \"name\": \"demo role admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/clients/{{client-uuid}}/roles",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"clients",
+						"{{client-uuid}}",
+						"roles"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "create user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"attributes\": {\n        \"attribute_key\": \"test_value\"\n    },\n    \"credentials\": [\n        {\n            \"temporary\": false,\n            \"type\": \"password\",\n            \"value\": \"qwerty@@\"\n        }\n    ],\n    \"username\": \"demo_admin\",\n    \"firstName\": \"Demo\",\n    \"lastName\": \"Admin user\",\n    \"email\": \"demoadmin@gmail.com\",\n    \"emailVerified\": true,\n    \"enabled\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/users",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"users"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "user role mapping",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"90372630-b76e-4c3e-b336-65be0ec125c7\",\n    \"name\": \"demo role admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}}/users/dbee6545-5108-48b0-8c63-0c0f03a17a11/role-mappings/clients/{{client-uuid}}",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}}",
+						"users",
+						"dbee6545-5108-48b0-8c63-0c0f03a17a11",
+						"role-mappings",
+						"clients",
+						"{{client-uuid}}"
+					]
+				},
+				"description": "Get users Returns a stream of users, filtered according to query parameters."
+			},
+			"response": []
+		},
+		{
+			"name": "get UserProfileMetadata",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/admin/realms/{{realm_name}}/users/profile/metadata",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm_name}}",
+						"users",
+						"profile",
+						"metadata"
+					]
+				},
+				"description": "Get the UserProfileMetadata from the configuration"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "client_id",
+			"value": "my-app-client",
+			"type": "string"
+		},
+		{
+			"key": "client_secret",
+			"value": "NYteBs5luhWEXrCy2y0b4M2xBDr7MAdR",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "realm_name",
+			"value": "bootlab",
+			"type": "string"
+		},
+		{
+			"key": "client-uuid",
+			"value": "c38562c9-0f24-457e-a49d-9be666a93046",
+			"type": "string"
+		}
+	]
+}
